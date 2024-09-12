@@ -1,7 +1,10 @@
-import "./globals.css";
+import "@/app/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Navbar from "@/components/common/navbar";
+import { type Locale } from "@/lib/locales";
+import { getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { Header } from "@/components/common/header";
 import { ThemeProvider } from "@/provider/theme-provider";
 
 const geistSans = localFont({
@@ -9,6 +12,7 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -20,20 +24,28 @@ export const metadata: Metadata = {
   description: "This application is jute & leather related products!",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+type RootType = {
   children: React.ReactNode;
-}>) {
+  params: {
+    locale: Locale;
+  };
+};
+
+const RootLayout = async ({ children, params }: RootType) => {
+  const message = await getMessages();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={params.locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          {children}
+          <NextIntlClientProvider messages={message}>
+            <Header />
+            {children}
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
