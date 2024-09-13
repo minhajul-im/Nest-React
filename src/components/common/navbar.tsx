@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { buttonVariants } from "../ui/button";
 import { LanguageSwitcher } from "./language-switcher";
 
-type LINKS_TYPE = {
+export type LINKS_TYPE = {
   title: string;
   link: string;
 };
