@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import { type Locale } from "@/lib/locales";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/header/header";
 import { ThemeProvider } from "@/provider/theme-provider";
 
 const geistSans = localFont({
