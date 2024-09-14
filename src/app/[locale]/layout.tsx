@@ -6,6 +6,7 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Header } from "@/components/header/header";
 import { ThemeProvider } from "@/provider/theme-provider";
+import { ImgKitProvider } from "@/provider/image-kit-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,8 +40,10 @@ const RootLayout = async ({ children, params }: RootType) => {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider messages={message}>
-            <Header />
-            {children}
+            <ImgKitProvider>
+              <Header />
+              {children}
+            </ImgKitProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
