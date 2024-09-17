@@ -7,7 +7,7 @@ export const Header = async () => {
   const links = await getNavData();
 
   return (
-    <header className="border-b shadow-md">
+    <header className="border-b shadow-lg md:sticky md:top-0 md:backdrop-blur-md z-40">
       <header className="container mx-auto px-4 lg:px-0">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-1 justify-start md:flex md:items-center md:gap-12">
