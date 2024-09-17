@@ -23,7 +23,7 @@ const MobileNavbar = ({ links }: { links: LINKS_TYPE[] }) => {
           />
         )}
         <div
-          className={`fixed top-0 left-0 w-72 sm:w-80 z-50 h-full duration-500  transition-transform ease-in-out bg-background text-foreground ${
+          className={`fixed top-0 left-0 w-72 sm:w-80 z-50 h-full duration-500  transition-transform ease-in-out bg-background text-foreground  ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}>
           <div className="mb-4 px-6 pt-6 flex items-center justify-between">
