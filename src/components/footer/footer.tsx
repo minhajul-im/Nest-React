@@ -1,8 +1,12 @@
-import Link from "next/link";
+import { getFooterData } from "@/services";
+import FooterLinks from "./footer-links";
 
-const Footer = () => {
+const Footer = async () => {
+  const { company, contact, setting, companyData, contactData, settingsData } =
+    await getFooterData();
+
   return (
-    <footer className="">
+    <footer className="bg-muted">
       <div className="container pt-16 pb-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="flex gap-4 flex-col justify-center mx-auto w-full">
@@ -105,86 +109,11 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="">
-            <h4 className="text-lg font-medium text-foreground text-center">
-              Company
-            </h4>
-
-            <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Company History
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Meet the Team
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Careers
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Employee Handbook
-              </Link>
-            </ul>
-          </div>
-
-          <div className="">
-            <h4 className="text-lg font-medium text-foreground text-center">
-              Settings
-            </h4>
-
-            <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                FAQ
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Terms & Condition
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Privacy & Policy
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Employee Handbook
-              </Link>
-            </ul>
-          </div>
-          <div className="">
-            <h4 className="text-lg font-medium text-foreground text-center">
-              Contact us
-            </h4>
-
-            <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                +88- 13 4 ** ***
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                example@gmail.com
-              </Link>
-              <Link
-                href={"#"}
-                className={`mx-auto text-center hover:text-primary tracking-wide block`}>
-                Dhaka, Bangladesh!
-              </Link>
-            </ul>
-          </div>
+          <FooterLinks links={companyData}>{company}</FooterLinks>
+          <FooterLinks links={settingsData}>{setting}</FooterLinks>
+          <FooterLinks isLink={false} links={contactData}>
+            {contact}
+          </FooterLinks>
         </div>
       </div>
 

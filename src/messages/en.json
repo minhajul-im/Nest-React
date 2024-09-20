@@ -21,6 +21,17 @@
       "link": "/contact"
     }
   },
+  "Footer": {
+    "company": "Our Company",
+    "setting": "Settings",
+    "contact": "Contacts",
+    "phone": "+8801 234 7** ***",
+    "email": "example@gmail.com",
+    "location": "Dhaka, Bangladesh!",
+    "faq": { "title": "FAQ", "link": "/faq" },
+    "terms": { "title": "Terms & Condition", "link": "/terms-condition" },
+    "policy": { "title": "Privacy & Policy", "link": "/privacy-policy" }
+  },
 
   "HomePage": {
     "title": "About of Bangladesh!",
