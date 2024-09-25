@@ -1,5 +1,7 @@
 {
   "cSpell.words": [
+    "autoplay",
+    "clsx",
     "embla",
     "imagekit",
     "imagekitio",
@@ -8,6 +10,8 @@
     "lucide",
     "minhaj",
     "minhajul",
+    "tailwindcss",
+    "vaul",
     "zustand"
   ]
 }
