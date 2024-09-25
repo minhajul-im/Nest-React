@@ -74,6 +74,7 @@
   }
 }
 
+/* scrollbar, those are style for scrollbar */
 ::-webkit-scrollbar {
   width: 1px;
 }
@@ -84,4 +85,16 @@
 ::-webkit-scrollbar-thumb {
   background: var(--foreground);
   border-radius: 10px;
+}
+
+/* hero section, those are style for slider */
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
 }
