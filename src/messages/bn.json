@@ -21,6 +21,26 @@
       "link": "/contact"
     }
   },
+
+  "Contact": {
+    "office": {
+      "title": "ঠিকানা",
+      "details": "উত্তরা, ঢাকা, বাংলাদেশ!"
+    },
+    "email": {
+      "title": "ইমেইল",
+      "details": "example@gmail.com"
+    },
+    "whatsapp": {
+      "title": "ওয়াটসঅ্যাপ",
+      "details": "+৮৮০ ১৩০ ** ** **"
+    },
+    "telephone": {
+      "title": "টেলিফোন",
+      "details": "+৮৮০ ১৩৭ ৮৮৩ ***"
+    }
+  },
+
   "Footer": {
     "company": "আমাদের কোম্পানি",
     "setting": "সেটিংস",
