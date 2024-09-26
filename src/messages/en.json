@@ -21,6 +21,26 @@
       "link": "/contact"
     }
   },
+
+  "Contact": {
+    "office": {
+      "title": "Location",
+      "details": "Uttara, Dhaka, Bangladesh!"
+    },
+    "email": {
+      "title": "Email",
+      "details": "example@gmail.com"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "details": "+880 130 ** ** **"
+    },
+    "telephone": {
+      "title": "Telephone",
+      "details": "+880 137 883 ***"
+    }
+  },
+
   "Footer": {
     "company": "Our Company",
     "setting": "Settings",
