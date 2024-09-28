@@ -1,23 +1,128 @@
+"use client";
+
+import { useState } from "react";
 import { Send } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
+type InputType = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+const INITIAL_INPUT: InputType = {
+  name: "",
+  email: "",
+  message: "",
+};
+
 const SendMessage = () => {
+  const [inputs, setInputs] = useState<InputType>(INITIAL_INPUT);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setInputs((prev: InputType) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const validationError = checkInput(inputs);
+
+    if (validationError) {
+      setError(validationError);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Form submitted", inputs);
+      setInputs(INITIAL_INPUT);
+    } catch (error) {
+      console.log("ERROR", error);
+      setError("Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const checkInput = (data: InputType): string | null => {
+    const name = data.name.trim();
+    const email = data.email.trim();
+    const message = data.message.trim();
+
+    if (!name) {
+      return "Please provide your name.";
+    }
+
+    if (!email) {
+      return "Please provide your email.";
+    }
+
+    if (!emailRegex.test(email)) {
+      return "Please provide a valid email address.";
+    }
+
+    if (!message) {
+      return "Please provide a message.";
+    }
+
+    return null;
+  };
+
   return (
     <section className="lg:col-span-2 rounded-lg sm:p-10 p-4 z-10 max-lg:-order-1 max-lg:mb-8">
       <h2 className="text-2xl text-center text-muted-foreground font-bold mb-6">
         Send Message
       </h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="max-w-md mx-auto space-y-3">
-          <Input placeholder="Name" type="text" />
-          <Input placeholder="Email" type="text" />
-          <Input placeholder="Phone" type="text" />
-
-          <Textarea placeholder="Message..." rows={8} />
-          <Button className="w-full font-medium flex items-center gap-4">
-            <Send size={16} /> <span> Send Message</span>
+          <Input
+            name="name"
+            type="text"
+            placeholder="Name..."
+            value={inputs.name}
+            onChange={handleChange}
+          />
+          <Input
+            name="email"
+            type="email"
+            placeholder="Email..."
+            value={inputs.email}
+            onChange={handleChange}
+          />
+          <Textarea
+            rows={8}
+            name="message"
+            placeholder="Message..."
+            value={inputs.message}
+            onChange={handleChange}
+          />
+          {error && (
+            <p className="text-red-500 text-xs font-semibold">{error}</p>
+          )}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className={`w-full font-medium flex items-center gap-4 ${
+              isLoading ? "cursor-not-allowed" : ""
+            }`}>
+            <Send size={16} />
+            <span>{isLoading ? "Sending Message..." : "Send Message"}</span>
           </Button>
         </div>
       </form>
