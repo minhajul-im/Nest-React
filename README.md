@@ -1,6 +1,6 @@
 # Jutlee
 
-Welcome to the Jutlee project! This is a Next.js application that utilizes various modern web technologies to create a responsive and interactive user interface.
+Welcome to the Jutlee project! This is a Next.js application that utilizes various modern web technologies to create a responsive and interactive user interface centered around leather and jute products.
 
 ## Table of Contents
 
@@ -10,7 +10,6 @@ Welcome to the Jutlee project! This is a Next.js application that utilizes vario
 - [Scripts](#scripts)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -20,6 +19,7 @@ Welcome to the Jutlee project! This is a Next.js application that utilizes vario
 - Internationalization with Next Intl
 - Dynamic theming with Next Themes
 - Autoplay carousel feature
+- Email sending functionality using Resend
 
 ## Technologies Used
 
@@ -30,6 +30,7 @@ Welcome to the Jutlee project! This is a Next.js application that utilizes vario
 - **Radix UI**: Accessible UI primitives.
 - **Embla Carousel**: Responsive carousel component.
 - **ImageKit**: Image optimization and transformation.
+- **Resend**: Email service for sending emails.
 
 ## Installation
 
@@ -41,3 +42,4 @@ To get started with this project, you need to have [Yarn](https://classic.yarnpk
    git clone https://github.com/minhajul-im/jutlee.git
    cd jutlee
    ```
+
