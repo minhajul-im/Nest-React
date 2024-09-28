@@ -5,6 +5,7 @@ import { Send } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { sendEmail } from "@/action/email-action";
 
 type InputType = {
   name: string;
@@ -47,11 +48,12 @@ const SendMessage = () => {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Form submitted", inputs);
-      setInputs(INITIAL_INPUT);
+      const { success } = await sendEmail(inputs);
+
+      if (success) {
+        setInputs(INITIAL_INPUT);
+      }
     } catch (error) {
-      console.log("ERROR", error);
       setError("Failed to send message. Please try again.");
     } finally {
       setLoading(false);
