@@ -1,13 +1,13 @@
-import "@/app/globals.css";
+import "@/common/style//globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { type Locale } from "@/lib/locales";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import { Header } from "@/components/header/header";
 import { ThemeProvider } from "@/provider/theme-provider";
+import { ScreenFooter } from "@/modules/footer/screen-footer";
+import { ScreenHeader } from "@/modules/header/screen-header";
 import { ImgKitProvider } from "@/provider/image-kit-provider";
-import Footer from "@/components/footer/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,9 +42,9 @@ const RootLayout = async ({ children, params }: RootType) => {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider messages={message}>
             <ImgKitProvider>
-              <Header />
+              <ScreenHeader />
               {children}
-              <Footer />
+              <ScreenFooter />
             </ImgKitProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
