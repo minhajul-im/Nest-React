@@ -5,15 +5,15 @@ import { IoAdapter } from '@nestjs/platform-socket.io';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.useWebSocketAdapter(new IoAdapter(app));
+
   app.enableCors({
     origin: '*',
     methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
     allowedHeaders: 'Content-Type, Accept',
   });
 
-  app.useWebSocketAdapter(new IoAdapter(app));
-
-  await app.listen(8080);
+  await app.listen(3000);
 }
 
 bootstrap();
