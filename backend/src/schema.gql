@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type GraphqlEntity {
+  description: String!
+  id: String!
+  title: String!
+}
+
+type Mutation {
+  createPost(description: String!, title: String!): GraphqlEntity!
+}
+
+type Query {
+  post: [GraphqlEntity!]!
+  posts: [GraphqlEntity!]!
+}
