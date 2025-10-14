@@ -3,13 +3,16 @@
 # ------------------------------------------------------
 
 type GraphqlEntity {
+  createdAt: String!
   description: String!
   id: String!
+  image: String
   title: String!
+  updatedAt: String!
 }
 
 type Mutation {
-  createPost(description: String!, title: String!): GraphqlEntity!
+  createPost(description: String!, image: String, title: String!): GraphqlEntity!
 }
 
 type Query {

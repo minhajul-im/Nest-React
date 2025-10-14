@@ -6,6 +6,8 @@ export const GET_POSTS = gql`
       id
       title
       description
+      image
+      createdAt
     }
   }
 `;
@@ -16,16 +18,18 @@ export const GET_POST = gql`
       id
       title
       description
+      image
     }
   }
 `;
 
 export const CREATE_POST = gql`
-  mutation CreatePost($title: String!, $description: String!) {
-    createPost(title: $title, description: $description) {
+  mutation CreatePost($title: String!, $description: String!, $image: String) {
+    createPost(title: $title, description: $description, image: $image) {
       id
       title
       description
+      image
     }
   }
 `;

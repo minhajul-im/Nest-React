@@ -10,4 +10,13 @@ export class GraphqlEntity {
 
   @Field(() => String)
   description: string;
+
+  @Field(() => String, { nullable: true })
+  image?: string;
+
+  @Field(() => String)
+  createdAt: string;
+
+  @Field(() => String)
+  updatedAt: string;
 }

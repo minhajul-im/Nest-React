@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { GraphqlController } from './graphql.controller';
-import { GraphqlResolver } from './graphql.resolver';
+import { GraphqlController } from './blog.controller';
+import { GraphqlResolver } from './blog.resolver';
 
 @Module({
   controllers: [GraphqlController],

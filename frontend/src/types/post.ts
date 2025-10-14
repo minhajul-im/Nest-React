@@ -1,5 +1,7 @@
-export interface Post {
+export interface PostType {
   id: string;
   title: string;
   description: string;
+  image?: string;
+  createdAt: string;
 }

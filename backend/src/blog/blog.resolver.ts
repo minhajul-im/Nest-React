@@ -1,14 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { GraphqlEntity } from './graphql.entity';
+import { GraphqlEntity } from './blog.entity';
 import { Param } from '@nestjs/common';
 
 @Resolver(() => GraphqlEntity)
 export class GraphqlResolver {
-  private posts = [
-    { id: '1', title: 'First Post', description: 'This is the first post' },
-    { id: '2', title: 'Second Post', description: 'This is the second post' },
-    { id: '3', title: 'Third Post', description: 'This is the third post' },
-  ];
+  private posts: Array<PostType> = [];
 
   @Query(() => [GraphqlEntity], { name: 'posts' })
   getPosts() {
@@ -24,13 +20,26 @@ export class GraphqlResolver {
   createPost(
     @Args('title') title: string,
     @Args('description') description: string,
+    @Args('image', { nullable: true }) image?: string,
   ) {
     const newPost = {
       id: String(this.posts.length + 1),
       title,
       description,
+      image: image || null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     this.posts.push(newPost);
     return newPost;
   }
+}
+
+interface PostType {
+  id: string;
+  title: string;
+  description: string;
+  image: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
