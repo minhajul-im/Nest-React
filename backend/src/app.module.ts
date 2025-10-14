@@ -1,10 +1,11 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
-import { GraphqlModule } from './graphql/graphql.module';
+import { GraphqlModule } from './blog/blog.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
+import { UploadController } from './file/upload.controller';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { join } from 'path';
     ChatModule,
     GraphqlModule,
   ],
-  controllers: [],
+  controllers: [UploadController],
   providers: [],
 })
 export class AppModule {}
