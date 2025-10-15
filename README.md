@@ -1,1 +1,1 @@
-# NestJS Practice
+# NestJS, React, GraphQL, WebSocket, REST
