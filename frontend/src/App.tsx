@@ -1,9 +1,9 @@
-import { PostsList } from "./components/PostsList";
+import { UsersPage } from "./pages/users";
 
 export const App = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      <PostsList />
+      <UsersPage />
     </div>
   );
 };
