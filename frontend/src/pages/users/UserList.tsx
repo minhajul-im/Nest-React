@@ -15,7 +15,7 @@ export const UserList = ({
 }: UserListProps) => {
   if (users.length === 0) {
     return (
-      <Card className="w-full max-w-2xl bg-gray-900 border-gray-800">
+      <Card className="w-full max-w-6xl mx-auto bg-gray-900 border-gray-800">
         <CardContent className="p-8 text-center">
           <div className="text-gray-400 text-lg">No users found</div>
           <div className="text-gray-500 text-sm mt-2">

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { SignupForm } from "./Form";
+import { useState } from "react";
 import { UserList } from "./UserList";
 import { EditUserModal } from "./EditModal";
+import { useQuery } from "@apollo/client/react";
+import { GET_USERS } from "@/graphql/queries";
 
 export interface UserType {
   _id: string;
@@ -9,24 +10,15 @@ export interface UserType {
   email: string;
 }
 
+interface GetUsersDataType {
+  users: Array<UserType>;
+}
+
 export const UsersPage = () => {
-  const [users, setUsers] = useState<UserType[]>([]);
   const [editingUser, setEditingUser] = useState<UserType | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/users");
-      const data = await response.json();
-      setUsers(data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const { data } = useQuery<GetUsersDataType>(GET_USERS);
 
   const handleEditUser = (user: UserType) => {
     setEditingUser(user);
@@ -51,9 +43,7 @@ export const UsersPage = () => {
         if (!response.ok) {
           throw new Error("Failed to delete user");
         }
-
         await response.json();
-        fetchUsers();
       } catch (error) {
         console.error("Error deleting user:", error);
       }
@@ -72,24 +62,16 @@ export const UsersPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="flex justify-center">
-            <SignupForm onUserCreated={fetchUsers} />
-          </div>
-          <div className="flex justify-center">
-            <UserList
-              users={users}
-              onEditUser={handleEditUser}
-              onDeleteUser={handleDeleteUser}
-            />
-          </div>
-        </div>
+        <UserList
+          users={(data?.users as UserType[]) || []}
+          onEditUser={handleEditUser}
+          onDeleteUser={handleDeleteUser}
+        />
 
         <EditUserModal
           user={editingUser}
           isOpen={isEditModalOpen}
           onClose={handleCloseEditModal}
-          onUserUpdated={fetchUsers}
         />
       </div>
     </div>

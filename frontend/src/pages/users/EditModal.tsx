@@ -18,14 +18,12 @@ interface EditUserModalProps {
   user: UserType | null;
   isOpen: boolean;
   onClose: () => void;
-  onUserUpdated: () => void;
 }
 
 export const EditUserModal = ({
   user,
   isOpen,
   onClose,
-  onUserUpdated,
 }: EditUserModalProps) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -59,7 +57,6 @@ export const EditUserModal = ({
       }
 
       await response.json();
-      onUserUpdated(); // Refresh the user list
       onClose(); // Close the modal
     } catch (error) {
       console.error("Error updating user:", error);
