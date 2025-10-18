@@ -1,14 +1,14 @@
 import { useQuery, useMutation } from "@apollo/client/react";
-import { GET_POSTS, CREATE_POST } from "../graphql/queries";
+import { GET_POSTS, CREATE_POST } from "@/graphql/queries";
 import { useState } from "react";
-import type { PostType } from "../types/post";
-import { uploadImage } from "../lib/upload";
+import type { PostType } from "@/types/post";
+import { uploadImage } from "@/lib/upload";
 
 interface GetPostsData {
   posts: Array<PostType>;
 }
 
-export const PostsList = () => {
+export const BlogsPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

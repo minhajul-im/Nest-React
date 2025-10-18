@@ -18,7 +18,10 @@ export const UsersPage = () => {
   const [editingUser, setEditingUser] = useState<UserType | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { data } = useQuery<GetUsersDataType>(GET_USERS);
+  const { data, loading, error } = useQuery<GetUsersDataType>(GET_USERS);
+
+  if (loading) return <div className="text-white">Loading...</div>;
+  if (error) return <div className="text-white">Error: {error.message}</div>;
 
   const handleEditUser = (user: UserType) => {
     setEditingUser(user);

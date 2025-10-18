@@ -9,11 +9,11 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find();
+    return await this.userModel.find().exec();
   }
 
   async findOne(id: string): Promise<User | null> {
-    return await this.userModel.findById(id);
+    return await this.userModel.findById(id).exec();
   }
 
   async create(name: string, email: string, password: string): Promise<User> {
@@ -22,10 +22,10 @@ export class UsersService {
   }
 
   async update(id: string, user: UpdateUserDto): Promise<User | null> {
-    return await this.userModel.findByIdAndUpdate(id, user);
+    return await this.userModel.findByIdAndUpdate(id, user).exec();
   }
 
   async delete(id: string): Promise<User | null> {
-    return await this.userModel.findByIdAndDelete(id);
+    return await this.userModel.findByIdAndDelete(id).exec();
   }
 }
