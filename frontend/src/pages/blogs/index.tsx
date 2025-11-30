@@ -144,7 +144,7 @@ export const BlogsPage = () => {
             <div className="space-y-4">
               {data?.posts?.map((post: PostType) => (
                 <div
-                  key={post.id}
+                  key={post._id}
                   className="border border-gray-200 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-900">
                     {post.title}
