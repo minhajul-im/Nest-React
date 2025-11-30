@@ -1,14 +1,14 @@
 import { useQuery, useMutation } from "@apollo/client/react";
-import { GET_POSTS, CREATE_POST } from "../graphql/queries";
+import { GET_POSTS, CREATE_POST } from "@/graphql/queries";
 import { useState } from "react";
-import type { PostType } from "../types/post";
-import { uploadImage } from "../lib/upload";
+import type { PostType } from "@/types/post";
+import { uploadImage } from "@/lib/upload";
 
 interface GetPostsData {
   posts: Array<PostType>;
 }
 
-export const PostsList = () => {
+export const BlogsPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -144,7 +144,7 @@ export const PostsList = () => {
             <div className="space-y-4">
               {data?.posts?.map((post: PostType) => (
                 <div
-                  key={post.id}
+                  key={post._id}
                   className="border border-gray-200 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-900">
                     {post.title}

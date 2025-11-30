@@ -2,7 +2,7 @@ import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/user.module';
 import { ChatModule } from './chat/chat.module';
-import { GraphqlModule } from './blog/blog.module';
+import { GraphqlModule } from './blogs/blog.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UploadController } from './file/upload.controller';

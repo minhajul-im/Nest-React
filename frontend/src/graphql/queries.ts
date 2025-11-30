@@ -13,7 +13,7 @@ export const GET_USERS = gql`
 export const GET_POSTS = gql`
   query GetPosts {
     posts {
-      id
+      _id
       title
       description
       image
@@ -36,7 +36,6 @@ export const GET_POST = gql`
 export const CREATE_POST = gql`
   mutation CreatePost($title: String!, $description: String!, $image: String) {
     createPost(title: $title, description: $description, image: $image) {
-      id
       title
       description
       image
