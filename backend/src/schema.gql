@@ -2,22 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type GraphqlEntity {
+type BlogEntity {
+  _id: String!
   createdAt: String!
   description: String!
-  id: String!
   image: String
   title: String!
   updatedAt: String!
 }
 
 type Mutation {
-  createPost(description: String!, image: String, title: String!): GraphqlEntity!
+  createPost(description: String!, image: String, title: String!): BlogEntity!
 }
 
 type Query {
-  post: [GraphqlEntity!]!
-  posts: [GraphqlEntity!]!
+  post: [BlogEntity!]!
+  posts: [BlogEntity!]!
   users: [UserEntity!]!
 }
 

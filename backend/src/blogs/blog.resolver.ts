@@ -1,45 +1,22 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { GraphqlEntity } from './blog.entity';
-import { Param } from '@nestjs/common';
+import { BlogEntity } from './blog.entity';
+import { BlogService } from './blog.service';
 
-@Resolver(() => GraphqlEntity)
-export class GraphqlResolver {
-  private posts: Array<PostType> = [];
+@Resolver(() => BlogEntity)
+export class BlogResolver {
+  constructor(private readonly blogService: BlogService) {}
 
-  @Query(() => [GraphqlEntity], { name: 'posts' })
+  @Query(() => [BlogEntity], { name: 'posts' })
   getPosts() {
-    return this.posts;
+    return this.blogService.findAll();
   }
 
-  @Query(() => [GraphqlEntity], { name: 'post' })
-  getPost(@Param('id') id: string) {
-    return this.posts?.find((post) => post.id === id);
-  }
-
-  @Mutation(() => GraphqlEntity)
+  @Mutation(() => BlogEntity, { name: 'createPost' })
   createPost(
     @Args('title') title: string,
     @Args('description') description: string,
     @Args('image', { nullable: true }) image?: string,
   ) {
-    const newPost = {
-      id: String(this.posts.length + 1),
-      title,
-      description,
-      image: image || null,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    this.posts.push(newPost);
-    return newPost;
+    return this.blogService.create(title, description, image);
   }
-}
-
-interface PostType {
-  id: string;
-  title: string;
-  description: string;
-  image: string | null;
-  createdAt: string;
-  updatedAt: string;
 }
