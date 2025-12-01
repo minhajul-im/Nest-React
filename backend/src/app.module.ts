@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UploadController } from './file/upload.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BlogModule } from './blogs/blog.module';
+import { TodosModule } from './todos/todos.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { BlogModule } from './blogs/blog.module';
     UsersModule,
     ChatModule,
     BlogModule,
+    TodosModule,
   ],
   controllers: [UploadController],
   providers: [],
