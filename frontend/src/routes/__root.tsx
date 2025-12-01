@@ -20,6 +20,19 @@ export const Route = createRootRoute({
         <Link to="/blogs" className="[&.active]:font-bold">
           Blogs
         </Link>
+
+        <Link to="/todos" className="[&.active]:font-bold">
+          Todos
+        </Link>
+        <Link to="/revalidate" className="[&.active]:font-bold">
+          Revalidate
+        </Link>
+        <Link to="/immutable" className="[&.active]:font-bold">
+          Immutable
+        </Link>
+        <Link to="/e-tag" className="[&.active]:font-bold">
+          E-Tag
+        </Link>
       </div>
       <hr />
       <Outlet />
