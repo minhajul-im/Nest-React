@@ -10,14 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsersRouteImport } from './routes/users'
+import { Route as TodosRouteImport } from './routes/todos'
+import { Route as TodoIdRouteImport } from './routes/todo-id'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RevalidateIndexRouteImport } from './routes/revalidate/index'
+import { Route as ImmutableIndexRouteImport } from './routes/immutable/index'
 
 const UsersRoute = UsersRouteImport.update({
   id: '/users',
   path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodosRoute = TodosRouteImport.update({
+  id: '/todos',
+  path: '/todos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodoIdRoute = TodoIdRouteImport.update({
+  id: '/todo-id',
+  path: '/todo-id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -40,20 +54,38 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RevalidateIndexRoute = RevalidateIndexRouteImport.update({
+  id: '/revalidate/',
+  path: '/revalidate/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImmutableIndexRoute = ImmutableIndexRouteImport.update({
+  id: '/immutable/',
+  path: '/immutable/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/todo-id': typeof TodoIdRoute
+  '/todos': typeof TodosRoute
   '/users': typeof UsersRoute
+  '/immutable': typeof ImmutableIndexRoute
+  '/revalidate': typeof RevalidateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/todo-id': typeof TodoIdRoute
+  '/todos': typeof TodosRoute
   '/users': typeof UsersRoute
+  '/immutable': typeof ImmutableIndexRoute
+  '/revalidate': typeof RevalidateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +93,46 @@ export interface FileRoutesById {
   '/blogs': typeof BlogsRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/todo-id': typeof TodoIdRoute
+  '/todos': typeof TodosRoute
   '/users': typeof UsersRoute
+  '/immutable/': typeof ImmutableIndexRoute
+  '/revalidate/': typeof RevalidateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blogs' | '/signin' | '/signup' | '/users'
+  fullPaths:
+    | '/'
+    | '/blogs'
+    | '/signin'
+    | '/signup'
+    | '/todo-id'
+    | '/todos'
+    | '/users'
+    | '/immutable'
+    | '/revalidate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blogs' | '/signin' | '/signup' | '/users'
-  id: '__root__' | '/' | '/blogs' | '/signin' | '/signup' | '/users'
+  to:
+    | '/'
+    | '/blogs'
+    | '/signin'
+    | '/signup'
+    | '/todo-id'
+    | '/todos'
+    | '/users'
+    | '/immutable'
+    | '/revalidate'
+  id:
+    | '__root__'
+    | '/'
+    | '/blogs'
+    | '/signin'
+    | '/signup'
+    | '/todo-id'
+    | '/todos'
+    | '/users'
+    | '/immutable/'
+    | '/revalidate/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +140,11 @@ export interface RootRouteChildren {
   BlogsRoute: typeof BlogsRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
+  TodoIdRoute: typeof TodoIdRoute
+  TodosRoute: typeof TodosRoute
   UsersRoute: typeof UsersRoute
+  ImmutableIndexRoute: typeof ImmutableIndexRoute
+  RevalidateIndexRoute: typeof RevalidateIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -86,6 +154,20 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/todos': {
+      id: '/todos'
+      path: '/todos'
+      fullPath: '/todos'
+      preLoaderRoute: typeof TodosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/todo-id': {
+      id: '/todo-id'
+      path: '/todo-id'
+      fullPath: '/todo-id'
+      preLoaderRoute: typeof TodoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -116,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/revalidate/': {
+      id: '/revalidate/'
+      path: '/revalidate'
+      fullPath: '/revalidate'
+      preLoaderRoute: typeof RevalidateIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/immutable/': {
+      id: '/immutable/'
+      path: '/immutable'
+      fullPath: '/immutable'
+      preLoaderRoute: typeof ImmutableIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -124,7 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   BlogsRoute: BlogsRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
+  TodoIdRoute: TodoIdRoute,
+  TodosRoute: TodosRoute,
   UsersRoute: UsersRoute,
+  ImmutableIndexRoute: ImmutableIndexRoute,
+  RevalidateIndexRoute: RevalidateIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
