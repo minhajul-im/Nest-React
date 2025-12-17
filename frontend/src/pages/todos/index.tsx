@@ -1,5 +1,13 @@
 import { Button } from "@/components/ui/button";
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
   Item,
   ItemActions,
   ItemContent,
@@ -8,38 +16,119 @@ import {
 } from "@/components/ui/item";
 import { useEffect, useState } from "react";
 
+interface Todo {
+  _id: string;
+  title: string;
+  description: string;
+}
+
+const BASE_URL = `http://localhost:3000/api/v1/todos`;
+
 export const TodosPage = () => {
-  const [todos, setTodos] = useState<
-    Array<{ id: string; title: string; completed: boolean }>
-  >([]);
+  const [todo, setTodo] = useState<Todo | null>(null);
+  const [todos, setTodos] = useState<Array<Todo>>([]);
+
+  const getData = async () => {
+    const response = await fetch(BASE_URL);
+    const data = await response.json();
+    setTodos(data);
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await fetch("http://localhost:3000/todos");
-      const data = await response.json();
-      setTodos(data);
-    };
     getData();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+
+    const response = await fetch(
+      `${BASE_URL}${todo?._id ? `/${todo._id}` : ""}`,
+      {
+        method: todo?._id ? "PATCH" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, description }),
+      }
+    );
+
+    if (response.ok) {
+      await response.json();
+      getData();
+      setTodo(null);
+      form.reset();
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const response = await fetch(`${BASE_URL}/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      await response.json();
+      getData();
+    }
+  };
 
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold my-4 text-center">Todos</h1>
+      <Card className="w-full max-w-sm mx-auto mb-4">
+        <CardHeader>
+          <CardTitle>Add a new todo</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <div className="grid gap-0.5">
+                <label htmlFor="title">Title</label>
+                <Input
+                  name="title"
+                  type="text"
+                  defaultValue={todo?.title || ""}
+                  placeholder="Enter title"
+                  required
+                />
+              </div>
+              <div className="grid gap-0.5">
+                <label htmlFor="description">Description</label>
+                <Input
+                  name="description"
+                  type="text"
+                  defaultValue={todo?.description || ""}
+                  placeholder="Enter description"
+                  required
+                />
+              </div>
+            </div>
+            <Button type="submit" className="w-full mt-4">
+              Submit
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
       <div className="flex w-full max-w-md mx-auto flex-col gap-6">
-        {todos?.map((todo) => (
-          <Item variant="outline" key={todo.id}>
+        {todos?.map((t) => (
+          <Item variant="outline" key={t._id}>
             <ItemContent>
-              <ItemTitle className="capitalize">
-                {todo?.title?.slice(0, 20)}
-              </ItemTitle>
-              <ItemDescription>{todo?.title}</ItemDescription>
+              <ItemTitle className="capitalize">{t?.title}</ItemTitle>
+              <ItemDescription>{t?.description?.slice(0, 50)}</ItemDescription>
             </ItemContent>
             <ItemActions>
-              <a href={`/todo-id`}>
-                <Button variant="outline" size="sm">
-                  View
-                </Button>
-              </a>
+              <Button onClick={() => setTodo(t)} variant="outline" size="sm">
+                Edit
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDelete(t._id)}
+                className="text-red-500 border border-red-500">
+                Delete
+              </Button>
             </ItemActions>
           </Item>
         ))}
