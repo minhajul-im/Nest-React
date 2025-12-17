@@ -12,9 +12,7 @@ import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
-let counter = 0;
-
-@Controller('todos')
+@Controller('api/v1/todos')
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
@@ -24,37 +22,45 @@ export class TodosController {
   }
 
   @Get()
-  @Header('Cache-Control', 'public, max-age=60, stale-while-revalidate=30')
+  @Header(
+    'Cache-Control',
+    'public, max-age=60, stale-while-revalidate=300, must-revalidate',
+  )
   findAll() {
-    return this.todosService.findAll();
+    console.log('findAll hit! -> ' + Date.now());
+    const result = this.todosService.findAll();
+    return result;
   }
 
   @Get(':id')
-  @Header('Cache-Control', 'private, max-age=30, stale-while-revalidate=100')
+  @Header(
+    'Cache-Control',
+    'private, max-age=30, stale-while-revalidate=100, mast-revalidate',
+  )
   findOne(@Param('id') id: string) {
-    console.log('controller counter', counter++);
-    return this.todosService.findOne(+id);
+    return this.todosService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todosService.update(+id, updateTodoDto);
+    return this.todosService.update(id, updateTodoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.todosService.remove(+id);
+    return this.todosService.remove(id);
   }
 
   @Get('test/must')
-  @Header(
-    'Cache-Control',
-    'private, max-age=10, stale-while-revalidate=100, must-revalidate',
-  )
-  testMustRevalidate() {
-    let time = Date.now();
-    console.log('must-revalidate hit!', time);
-    return { data: 'MUST REVALIDATE', time };
+  @Header('Cache-Control', 'private, max-age=30, stale-while-revalidate=60')
+  async testMustRevalidate() {
+    return await new Promise((resolve) =>
+      setTimeout(() => {
+        let time = Date.now();
+        console.log('must-revalidate hit!', time);
+        resolve({ data: 'MUST REVALIDATE', version: 'v1', time });
+      }, 2000),
+    );
   }
 
   @Get('test/immutable')
