@@ -8,7 +8,7 @@ export const ImmutablePage = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        "http://localhost:3000/todos/test/immutable"
+        "http://localhost:3000/api/v1/todos/test/immutable"
       );
       const data = await response.json();
       setTodos(data);
