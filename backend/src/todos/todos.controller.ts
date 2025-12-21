@@ -7,10 +7,14 @@ import {
   Param,
   Delete,
   Header,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import * as crypto from 'crypto';
+import type { Request, Response } from 'express';
 
 @Controller('api/v1/todos')
 export class TodosController {
@@ -22,11 +26,20 @@ export class TodosController {
   }
 
   @Get()
-  @Header('Cache-Control', 'no-store')
-  findAll() {
-    console.log('findAll hit! -> ' + Date.now());
-    const result = this.todosService.findAll();
-    return result;
+  async findAll(@Req() req: Request, @Res() res: Response) {
+    const data = await this.todosService.findAll();
+
+    const body = JSON.stringify(data);
+    const etag = crypto.createHash('md5').update(body).digest('hex');
+
+    const clientEtag = req.headers['if-none-match'];
+
+    if (clientEtag && clientEtag === etag) {
+      res.status(304).end();
+      return;
+    }
+    res.set('ETag', etag);
+    return res.json(data);
   }
 
   @Get(':id')

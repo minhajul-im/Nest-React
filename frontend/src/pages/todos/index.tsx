@@ -31,8 +31,38 @@ export const TodosPage = () => {
 
   const getData = async () => {
     setIsLoading(true);
-    const response = await fetch(BASE_URL);
+
+    const lastETag = localStorage.getItem("todosETag");
+
+    const response = await fetch(BASE_URL, {
+      headers: lastETag ? { "If-None-Match": lastETag } : {},
+    });
+
+    const etag = response.headers.get("ETag");
+
+    if (response.status === 304) {
+      const cachedData = localStorage.getItem("todosData");
+      if (cachedData) {
+        setTodos(JSON.parse(cachedData));
+      }
+      setIsLoading(false);
+      return;
+    }
+
+    if (!response.ok) {
+      console.error("Fetch error:", response.status);
+      setIsLoading(false);
+      return;
+    }
+
     const data = await response.json();
+
+    localStorage.setItem("todosData", JSON.stringify(data));
+
+    if (etag) {
+      localStorage.setItem("todosETag", etag);
+    }
+
     setIsLoading(false);
     setTodos(data);
   };
@@ -118,6 +148,8 @@ export const TodosPage = () => {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
+          todos &&
+          todos.length > 0 &&
           todos?.map((t) => (
             <Item variant="outline" key={t._id}>
               <ItemContent>

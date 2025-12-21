@@ -16,12 +16,8 @@ export class TodosService {
   }
 
   async findAll() {
-    const time = Date.now();
     const result = (await this.todoModel.find().exec()) || [];
-    return [
-      ...result,
-      { _id: 'test-id', title: `Test-${time}`, description: 'test' },
-    ];
+    return result;
   }
 
   async findOne(id: string) {
