@@ -25,12 +25,15 @@ interface Todo {
 const BASE_URL = `http://localhost:3000/api/v1/todos`;
 
 export const TodosPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [todo, setTodo] = useState<Todo | null>(null);
   const [todos, setTodos] = useState<Array<Todo>>([]);
 
   const getData = async () => {
+    setIsLoading(true);
     const response = await fetch(BASE_URL);
     const data = await response.json();
+    setIsLoading(false);
     setTodos(data);
   };
 
@@ -112,26 +115,32 @@ export const TodosPage = () => {
         </CardContent>
       </Card>
       <div className="flex w-full max-w-md mx-auto flex-col gap-6">
-        {todos?.map((t) => (
-          <Item variant="outline" key={t._id}>
-            <ItemContent>
-              <ItemTitle className="capitalize">{t?.title}</ItemTitle>
-              <ItemDescription>{t?.description?.slice(0, 50)}</ItemDescription>
-            </ItemContent>
-            <ItemActions>
-              <Button onClick={() => setTodo(t)} variant="outline" size="sm">
-                Edit
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleDelete(t._id)}
-                className="text-red-500 border border-red-500">
-                Delete
-              </Button>
-            </ItemActions>
-          </Item>
-        ))}
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          todos?.map((t) => (
+            <Item variant="outline" key={t._id}>
+              <ItemContent>
+                <ItemTitle className="capitalize">{t?.title}</ItemTitle>
+                <ItemDescription>
+                  {t?.description?.slice(0, 50)}
+                </ItemDescription>
+              </ItemContent>
+              <ItemActions>
+                <Button onClick={() => setTodo(t)} variant="outline" size="sm">
+                  Edit
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleDelete(t._id)}
+                  className="text-red-500 border border-red-500">
+                  Delete
+                </Button>
+              </ItemActions>
+            </Item>
+          ))
+        )}
       </div>
     </div>
   );

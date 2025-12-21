@@ -22,10 +22,7 @@ export class TodosController {
   }
 
   @Get()
-  @Header(
-    'Cache-Control',
-    'public, max-age=60, stale-while-revalidate=300, must-revalidate',
-  )
+  @Header('Cache-Control', 'no-store')
   findAll() {
     console.log('findAll hit! -> ' + Date.now());
     const result = this.todosService.findAll();
@@ -52,23 +49,22 @@ export class TodosController {
   }
 
   @Get('test/must')
-  @Header('Cache-Control', 'private, max-age=30, stale-while-revalidate=60')
-  async testMustRevalidate() {
-    return await new Promise((resolve) =>
-      setTimeout(() => {
-        let time = Date.now();
-        console.log('must-revalidate hit!', time);
-        resolve({ data: 'MUST REVALIDATE', version: 'v1', time });
-      }, 2000),
-    );
+  @Header(
+    'Cache-Control',
+    'private, max-age=30, stale-while-revalidate=100, immutable',
+  )
+  testMustRevalidate() {
+    let time = Date.now();
+    console.log('must-revalidate hit!', time);
+    return { data: 'MUST REVALIDATE', version: 'v1', time };
   }
 
   @Get('test/immutable')
-  @Header('Cache-Control', 'public, max-age=60, immutable')
+  @Header('Cache-Control', 'public, immutable')
   testImmutable() {
     const time = Date.now();
     console.log('immutable hit!', time);
 
-    return { data: 'IMMUTABLE', version: 'v1', time: time };
+    return { data: 'IMMUTABLE', version: 'v1' };
   }
 }
