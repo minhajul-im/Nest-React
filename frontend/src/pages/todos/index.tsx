@@ -144,7 +144,7 @@ export const TodosPage = () => {
           </form>
         </CardContent>
       </Card>
-      <div className="flex w-full max-w-md mx-auto flex-col gap-6">
+      <div className="flex w-full max-w-sm mx-auto flex-col gap-6">
         {isLoading ? (
           <p>Loading...</p>
         ) : (
